@@ -1,0 +1,16 @@
+bees app:proxy:update -a acme-maintenance -al www.acme.com
+
+Quite some time ago Martin Fowler wrote about a pattern he had observed that he named “blue green deployment”. The core idea is that you can deploy to at least 2 parallel production class environments, and then switch between then as a way of “promoting” one environment to production.
+
+The benefits are clear for continuous deployment - where you can confidently deploy to a production grade environment, and then cut over, or cut back, quickly. Reducing the cost of a rollback to zero means you can be fearless with deployments (if you want !).
+ 
+
+Blue-Green Deployments
+I have also seen this used to make sure DR (disaster recovery) environments are kept healthy in more traditional non cloud deployments - in this case, there was concern that, historically, when a DR environment is needed to be used it isn’t actually workable - so one way to keep it healthy and a peer with production is to alternate what you deem as production or DR.
+
+On RUN@cloud we now allow this pattern - this is done by a new feature that allows you to bind addresses to apps, for example:
+
+bees app:proxy:update -a acme-maintenance -al www.acme.com
+
+This now means that www.acme.com points to your acme-maintenance app. So you can do this between any apps - you can have a whole range of them - separate apps, separate IDs - remap your domain name atomically. This allows all sorts of patterns to be implemented - like blue-green deployment, or maintenance mode and more. This stack overflow question gave a sneak peak of this a few weeks back.
+
